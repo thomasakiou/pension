@@ -1,5 +1,5 @@
 // Google Apps Script Web App URL
-const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwelxxKeYoyY0S4Es4MwM8V1n7RCSdZdxiFoW7DDrbInhsluz0AUFaTksXfFTA6vOcw/exec';
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyG1QU2Rdt93BjMzSm3eZ-gxvsU_aIvZTjBNFqoEz5-jFmpVRYlr8Gv6WCPzAAE4_6h/exec';
 
 // PFA Codes Mapping
 const PFA_LIST = [
