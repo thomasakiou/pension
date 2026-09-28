@@ -56,25 +56,19 @@ document.addEventListener('DOMContentLoaded', () => {
         // Gather Data using FormData
         const formData = new FormData(form);
 
-        // Helper to format values as requested before sending
-        function formatNaira(val) {
-            const num = parseFloat(val);
-            if (isNaN(num)) return "₦ 0.00";
-            return "₦ " + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        }
-
         // Build the strict JSON payload expected by the Google Apps Script
+        // Send raw numbers — the Apps Script will format with ₦ before writing to the sheet
         const payload = {
             forMonth: formData.get("for the month of:") || "",
-            contributionPeriod: formatNaira(formData.get("year of contribution (MAY 2025) to date")),
+            contributionPeriod: parseFloat(formData.get("year of contribution (MAY 2025) to date")) || 0,
             staffId: formData.get("staff id") || "",
             rsaPin: formData.get("RSA pin") || "",
             employeeName: formData.get("employee name") || "",
-            employeeStatutoryContribution: formatNaira(formData.get("employee statutory contribution")),
-            employerStatutoryContribution: formatNaira(formData.get("employer statutory contribution")),
-            employeeVoluntaryContribution: formatNaira(formData.get("employee voluntary contribution")),
-            employerVoluntaryContribution: formatNaira(formData.get("employer voluntary contribution")),
-            otherContribution: formatNaira(formData.get("other contribution")),
+            employeeStatutoryContribution: parseFloat(formData.get("employee statutory contribution")) || 0,
+            employerStatutoryContribution: parseFloat(formData.get("employer statutory contribution")) || 0,
+            employeeVoluntaryContribution: parseFloat(formData.get("employee voluntary contribution")) || 0,
+            employerVoluntaryContribution: parseFloat(formData.get("employer voluntary contribution")) || 0,
+            otherContribution: parseFloat(formData.get("other contribution")) || 0,
             pfaCode: formData.get("pfa code") || ""
         };
 
