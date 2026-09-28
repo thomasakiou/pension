@@ -56,6 +56,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Gather Data using FormData
         const formData = new FormData(form);
 
+        // Helper to format values as requested before sending
+        function formatNaira(val) {
+            const num = parseFloat(val);
+            if (isNaN(num)) return "";
+            return "₦ " + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
         // Build the strict JSON payload expected by the Google Apps Script
         const payload = {
             forMonth: formData.get("for the month of:") || "",
@@ -63,11 +70,11 @@ document.addEventListener('DOMContentLoaded', () => {
             staffId: formData.get("staff id") || "",
             rsaPin: formData.get("RSA pin") || "",
             employeeName: formData.get("employee name") || "",
-            employeeStatutoryContribution: formData.get("employee statutory contribution") || 0,
-            employerStatutoryContribution: formData.get("employer statutory contribution") || 0,
-            employeeVoluntaryContribution: formData.get("employee voluntary contribution") || 0,
-            employerVoluntaryContribution: formData.get("employer voluntary contribution") || 0,
-            otherContribution: formData.get("other contribution") || 0,
+            employeeStatutoryContribution: formatNaira(formData.get("employee statutory contribution")),
+            employerStatutoryContribution: formatNaira(formData.get("employer statutory contribution")),
+            employeeVoluntaryContribution: formatNaira(formData.get("employee voluntary contribution")),
+            employerVoluntaryContribution: formatNaira(formData.get("employer voluntary contribution")),
+            otherContribution: formatNaira(formData.get("other contribution")),
             pfaCode: formData.get("pfa code") || ""
         };
 
@@ -117,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const val = parseFloat(input.value) || 0;
             total += val;
         });
-        totalInput.value = total > 0 ? total.toFixed(2) : '';
+        totalInput.value = total > 0 ? total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '';
     }
 
     contributionInputs.forEach(input => {
