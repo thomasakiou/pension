@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Build the strict JSON payload expected by the Google Apps Script
         const payload = {
             forMonth: formData.get("for the month of:") || "",
-            contributionPeriod: formData.get("year of contribution (MAY 2025) to date") || "",
+            contributionPeriod: formatNaira(formData.get("year of contribution (MAY 2025) to date")),
             staffId: formData.get("staff id") || "",
             rsaPin: formData.get("RSA pin") || "",
             employeeName: formData.get("employee name") || "",
