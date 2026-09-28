@@ -64,6 +64,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Programmatically append employer code
         data.append("employer code", "PU0000328008_N");
+        // Append legacy employer code just in case
+        data.append("EMPLOYER_CODE", "PU0000328008_N");
+
+        // Ensure S/N is at least present in the payload
+        data.append("S/N", "");
+
+        // Duplicate fields out to old known variables for backwards compatibility if the Apps script wasn't updated
+        data.append("FIRST_NAME", formData.get("employee name") || "");
+        data.append("LAST_NAME", formData.get("employee name") || ""); // Sent same name for both just in case
+        data.append("PFA", formData.get("pfa code") || "");
+        data.append("RSA_PIN", formData.get("RSA pin") || "");
+        data.append("AMOUNT", formData.get("total contribution") || "");
+        data.append("PERIOD", formData.get("for the month of:") + " " + formData.get("year of contribution (MAY 2025) to date"));
 
         try {
             // Using fetch to trigger Apps Script
