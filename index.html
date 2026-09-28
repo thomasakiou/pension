@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pension Data Entry Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon"></div>
+                <h1>PensionData Form</h1>
+            </div>
+            <p>Securely submit your pension data below</p>
+        </header>
+
+        <form id="pensionForm" class="glass-form">
+            <div class="form-grid">
+                <!-- Personal Information -->
+                <div class="input-group">
+                    <label for="employeeName">Employee Name</label>
+                    <input type="text" id="employeeName" name="employee name" placeholder="Full Name" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="staffId">Staff ID</label>
+                    <input type="text" id="staffId" name="staff id" placeholder="Staff ID" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="rsaPin">RSA PIN</label>
+                    <input type="text" id="rsaPin" name="RSA pin" placeholder="PENXXXXXXXXXXXX" required>
+                </div>
+
+                <div class="input-group full-width">
+                    <label for="pfaCode">PFA Name</label>
+                    <div class="select-wrapper">
+                        <select id="pfaCode" name="pfa code" required>
+                            <option value="" disabled selected>Select your PFA...</option>
+                            <!-- Options will be populated by JS -->
+                        </select>
+                        <svg class="select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 9l6 6 6-6"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Period details -->
+                <div class="input-group">
+                    <label for="monthOf">For the Month of:</label>
+                    <div class="select-wrapper">
+                        <select id="monthOf" name="for the month of:" required>
+                            <option value="" disabled selected>Select Month...</option>
+                            <option value="January">January</option>
+                            <option value="February">February</option>
+                            <option value="March">March</option>
+                            <option value="April">April</option>
+                            <option value="May">May</option>
+                            <option value="June">June</option>
+                            <option value="July">July</option>
+                            <option value="August">August</option>
+                            <option value="September">September</option>
+                            <option value="October">October</option>
+                            <option value="November">November</option>
+                            <option value="December">December</option>
+                        </select>
+                        <svg class="select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 9l6 6 6-6"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="yearOf">Year of Contribution</label>
+                    <input type="number" id="yearOf" name="year of contribution (MAY 2025) to date"
+                        placeholder="e.g. 2025" required>
+                </div>
+
+                <!-- Contributions -->
+                <div class="input-group">
+                    <label for="empStatutory">Employee Statutory</label>
+                    <input type="number" id="empStatutory" class="contribution-input"
+                        name="employee statutory contribution" placeholder="0.00" step="0.01" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="emprStatutory">Employer Statutory</label>
+                    <input type="number" id="emprStatutory" class="contribution-input"
+                        name="employer statutory contribution" placeholder="0.00" step="0.01" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="empVoluntary">Employee Voluntary</label>
+                    <input type="number" id="empVoluntary" class="contribution-input"
+                        name="employee voluntary contribution" placeholder="0.00" step="0.01">
+                </div>
+
+                <div class="input-group">
+                    <label for="emprVoluntary">Employer Voluntary</label>
+                    <input type="number" id="emprVoluntary" class="contribution-input"
+                        name="employer voluntary contribution" placeholder="0.00" step="0.01">
+                </div>
+
+                <div class="input-group">
+                    <label for="otherContribution">Other Contribution</label>
+                    <input type="number" id="otherContribution" class="contribution-input" name="other contribution"
+                        placeholder="0.00" step="0.01">
+                </div>
+
+                <div class="input-group">
+                    <label for="totalContribution">Total Contribution</label>
+                    <input type="number" id="totalContribution" name="total contribution" placeholder="0.00" step="0.01"
+                        readonly
+                        style="background-color: rgba(255, 255, 255, 0.1); cursor: not-allowed; border-color: rgba(255,255,255,0.2);">
+                </div>
+            </div>
+
+            <button type="submit" id="submitBtn">
+                <span class="btn-text">Submit Data</span>
+                <div class="spinner class-hidden" id="loadingSpinner"></div>
+            </button>
+        </form>
+
+        <div id="successModal" class="modal hidden">
+            <div class="modal-content glass-form">
+                <div class="success-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <path d="M22 4L12 14.01l-3-3"></path>
+                    </svg>
+                </div>
+                <h2>Success!</h2>
+                <p>Your pension data has been successfully recorded.</p>
+                <button id="closeModalBtn" class="secondary-btn">New Submission</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
