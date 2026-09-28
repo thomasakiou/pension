@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Helper to format values as requested before sending
         function formatNaira(val) {
             const num = parseFloat(val);
-            if (isNaN(num)) return "";
+            if (isNaN(num)) return "₦ 0.00";
             return "₦ " + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
 
