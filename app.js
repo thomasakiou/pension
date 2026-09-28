@@ -56,39 +56,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // Gather Data using FormData
         const formData = new FormData(form);
 
-        // Convert the form data to URL encoded string which Google Apps Script usually expects
-        const data = new URLSearchParams();
-        for (const pair of formData) {
-            data.append(pair[0], pair[1]);
-        }
-
-        // Programmatically append employer code
-        data.append("employer code", "PU0000328008_N");
-        // Append legacy employer code just in case
-        data.append("EMPLOYER_CODE", "PU0000328008_N");
-
-        // Ensure S/N is at least present in the payload
-        data.append("S/N", "");
-
-        // Duplicate fields out to old known variables for backwards compatibility if the Apps script wasn't updated
-        data.append("FIRST_NAME", formData.get("employee name") || "");
-        data.append("LAST_NAME", formData.get("employee name") || ""); // Sent same name for both just in case
-        data.append("PFA", formData.get("pfa code") || "");
-        data.append("RSA_PIN", formData.get("RSA pin") || "");
-        data.append("AMOUNT", formData.get("total contribution") || "");
-        data.append("PERIOD", formData.get("for the month of:") + " " + formData.get("year of contribution (MAY 2025) to date"));
+        // Build the strict JSON payload expected by the Google Apps Script
+        const payload = {
+            forMonth: formData.get("for the month of:") || "",
+            contributionPeriod: formData.get("year of contribution (MAY 2025) to date") || "",
+            staffId: formData.get("staff id") || "",
+            rsaPin: formData.get("RSA pin") || "",
+            employeeName: formData.get("employee name") || "",
+            employeeStatutoryContribution: formData.get("employee statutory contribution") || 0,
+            employerStatutoryContribution: formData.get("employer statutory contribution") || 0,
+            employeeVoluntaryContribution: formData.get("employee voluntary contribution") || 0,
+            employerVoluntaryContribution: formData.get("employer voluntary contribution") || 0,
+            otherContribution: formData.get("other contribution") || 0,
+            pfaCode: formData.get("pfa code") || ""
+        };
 
         try {
             // Using fetch to trigger Apps Script
             // mode: 'no-cors' is typically used for Google Apps Script Web Apps when not returning specific CORS headers.
-            // But this means we can't reliably read the response body. If the form successfully submits, it won't throw.
             const response = await fetch(WEB_APP_URL, {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Content-Type': 'text/plain;charset=utf-8',
                 },
-                body: data.toString()
+                body: JSON.stringify(payload)
             });
 
             // If it reaches here without network error, show success!
