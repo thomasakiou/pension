@@ -35,7 +35,12 @@
 
                 <div class="input-group">
                     <label for="staffId">Staff ID</label>
-                    <input type="text" id="staffId" name="staff id" placeholder="Staff ID" required>
+                    <div class="input-wrapper">
+                        <span class="currency-icon" style="font-weight:600; font-size:0.95rem;">P.</span>
+                        <input type="text" id="staffId" name="staff id" placeholder="1234" required maxlength="4"
+                            pattern="\d{4}" inputmode="numeric" title="Enter exactly 4 digits"
+                            style="padding-left: 2.25rem;">
+                    </div>
                 </div>
 
                 <div class="input-group">
@@ -59,26 +64,8 @@
                 <!-- Period details -->
                 <div class="input-group">
                     <label for="monthOf">For the Month of:</label>
-                    <div class="select-wrapper">
-                        <select id="monthOf" name="for the month of:" required>
-                            <option value="" disabled selected>Select Month...</option>
-                            <option value="January">January</option>
-                            <option value="February">February</option>
-                            <option value="March">March</option>
-                            <option value="April">April</option>
-                            <option value="May">May</option>
-                            <option value="June">June</option>
-                            <option value="July">July</option>
-                            <option value="August">August</option>
-                            <option value="September">September</option>
-                            <option value="October">October</option>
-                            <option value="November">November</option>
-                            <option value="December">December</option>
-                        </select>
-                        <svg class="select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M6 9l6 6 6-6"></path>
-                        </svg>
-                    </div>
+                    <input type="text" id="monthOf" name="for the month of:" value="MAY 2025 TO DATE" readonly
+                        style="background-color: rgba(255, 255, 255, 0.1); cursor: not-allowed; border-color: rgba(255,255,255,0.2);">
                 </div>
 
                 <div class="input-group">

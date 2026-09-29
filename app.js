@@ -44,6 +44,12 @@ document.addEventListener('DOMContentLoaded', () => {
         pfaSelect.appendChild(option);
     });
 
+    // Enforce digits-only on Staff ID input
+    const staffIdInput = document.getElementById('staffId');
+    staffIdInput.addEventListener('input', () => {
+        staffIdInput.value = staffIdInput.value.replace(/\D/g, '');
+    });
+
     // Handle Form Submission
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -59,11 +65,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Build the strict JSON payload expected by the Google Apps Script
         // Send raw numbers — the Apps Script will format with ₦ before writing to the sheet
         const payload = {
-            forMonth: formData.get("for the month of:") || "",
+            forMonth: (formData.get("for the month of:") || "").toUpperCase(),
             contributionPeriod: parseFloat(formData.get("year of contribution (MAY 2025) to date")) || 0,
-            staffId: formData.get("staff id") || "",
-            rsaPin: formData.get("RSA pin") || "",
-            employeeName: formData.get("employee name") || "",
+            staffId: "P." + (formData.get("staff id") || "").trim(),
+            rsaPin: (formData.get("RSA pin") || "").toUpperCase(),
+            employeeName: (formData.get("employee name") || "").toUpperCase(),
             employeeStatutoryContribution: parseFloat(formData.get("employee statutory contribution")) || 0,
             employerStatutoryContribution: parseFloat(formData.get("employer statutory contribution")) || 0,
             employeeVoluntaryContribution: parseFloat(formData.get("employee voluntary contribution")) || 0,
