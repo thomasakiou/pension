@@ -45,7 +45,9 @@
 
                 <div class="input-group">
                     <label for="rsaPin">RSA PIN</label>
-                    <input type="text" id="rsaPin" name="RSA pin" placeholder="PENXXXXXXXXXXXX" required>
+                    <input type="text" id="rsaPin" name="RSA pin" placeholder="PEN456789012345" required minlength="15"
+                        maxlength="15" pattern="^PEN\d{12}$"
+                        title="RSA PIN must be exactly 15 characters starting with PEN (e.g., PEN123456789012)">
                 </div>
 
                 <div class="input-group full-width">
