@@ -80,19 +80,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // Using fetch to trigger Apps Script
-            // mode: 'no-cors' is typically used for Google Apps Script Web Apps when not returning specific CORS headers.
+            // Standard CORS request since Google Apps Script provides Access-Control-Allow-Origin for text/plain
             const response = await fetch(WEB_APP_URL, {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'text/plain;charset=utf-8',
                 },
                 body: JSON.stringify(payload)
             });
 
-            // If it reaches here without network error, show success!
-            showSuccess();
-            form.reset();
+            const result = await response.json();
+
+            if (result && result.success) {
+                // If successful, show success modal
+                showSuccess();
+                form.reset();
+            } else {
+                // If the backend returned an error (e.g., duplicate staff ID)
+                alert(result.message || 'There was a problem submitting your data.');
+            }
 
         } catch (error) {
             console.error('Error submitting form:', error);
